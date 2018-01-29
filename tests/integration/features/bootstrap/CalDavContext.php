@@ -71,11 +71,11 @@ class CalDavContext implements \Behat\Behat\Context\Context {
 	}
 
 	/**
-	 * @When :user requests calendar :calendar
+	 * @When user :user requests calendar :calendar using the API
 	 * @param string $user
 	 * @param string $calendar
 	 */
-	public function requestsCalendar($user, $calendar)  {
+	public function userRequestsCalendarUsingTheAPI($user, $calendar)  {
 		$davUrl = $this->baseUrl . '/remote.php/dav/calendars/'.$calendar;
 
 		$password = ($user === 'admin') ? 'admin' : '123456';
@@ -119,11 +119,11 @@ class CalDavContext implements \Behat\Behat\Context\Context {
 	}
 
 	/**
-	 * @Then the exception is :message
+	 * @Then the exception should be :message
 	 * @param string $message
 	 * @throws \Exception
 	 */
-	public function theExceptionIs($message) {
+	public function theExceptionShouldBe($message) {
 		$result = $this->responseXml['value'][0]['value'];
 
 		if ($message !== $result) {
@@ -138,11 +138,11 @@ class CalDavContext implements \Behat\Behat\Context\Context {
 	}
 
 	/**
-	 * @Then the error message is :message
+	 * @Then the error message should be :message
 	 * @param string $message
 	 * @throws \Exception
 	 */
-	public function theErrorMessageIs($message) {
+	public function theErrorMessageShouldBe($message) {
 		$result = $this->responseXml['value'][1]['value'];
 
 		if ($message !== $result) {
@@ -157,7 +157,7 @@ class CalDavContext implements \Behat\Behat\Context\Context {
 	}
 
 	/**
-	 * @Given :user creates a calendar named :name
+	 * @Given user :user has created a calendar named :name
 	 * @param string $user
 	 * @param string $name
 	 */
