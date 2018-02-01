@@ -99,7 +99,7 @@ class CalDavContext implements \Behat\Behat\Context\Context {
 	 * @param int $code
 	 * @throws \Exception
 	 */
-	public function theCaldavHttpStatusCodeShouldBe($code) {
+	public function theCalDavHttpStatusCodeShouldBe($code) {
 		if ((int)$code !== $this->response->getStatusCode()) {
 			throw new \Exception(
 				sprintf(
@@ -119,11 +119,11 @@ class CalDavContext implements \Behat\Behat\Context\Context {
 	}
 
 	/**
-	 * @Then the exception should be :message
+	 * @Then the CalDAV exception should be :message
 	 * @param string $message
 	 * @throws \Exception
 	 */
-	public function theExceptionShouldBe($message) {
+	public function theCalDavExceptionShouldBe($message) {
 		$result = $this->responseXml['value'][0]['value'];
 
 		if ($message !== $result) {
@@ -138,11 +138,11 @@ class CalDavContext implements \Behat\Behat\Context\Context {
 	}
 
 	/**
-	 * @Then the error message should be :message
+	 * @Then the CalDAV error message should be :message
 	 * @param string $message
 	 * @throws \Exception
 	 */
-	public function theErrorMessageShouldBe($message) {
+	public function theCalDavErrorMessageShouldBe($message) {
 		$result = $this->responseXml['value'][1]['value'];
 
 		if ($message !== $result) {
@@ -157,11 +157,11 @@ class CalDavContext implements \Behat\Behat\Context\Context {
 	}
 
 	/**
-	 * @Given user :user has created a calendar named :name
+	 * @Given user :user has successfully created a calendar named :name
 	 * @param string $user
 	 * @param string $name
 	 */
-	public function createsACalendarNamed($user, $name) {
+	public function userHasCreatedACalendarNamed($user, $name) {
 		$davUrl = $this->baseUrl . '/remote.php/dav/calendars/'.$user.'/'.$name;
 		$password = ($user === 'admin') ? 'admin' : '123456';
 
@@ -178,6 +178,7 @@ class CalDavContext implements \Behat\Behat\Context\Context {
 		);
 
 		$this->response = $this->client->send($request);
+		$this->theCalDavHttpStatusCodeShouldBe(201);
 	}
 
 }
